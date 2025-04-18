@@ -10,13 +10,15 @@
     <div id="app">
 
         <div>
-            <h1>{{ title }}</h1>
+            <h1 :style="{
+                color: inputValue.length < 5 ? 'darkred' : 'darkblue',
+                fontSize: inputValue.length < 6 ? '2rem' : '1.5rem'
+            }">{{ title }}</h1>
             <div>
                 <input 
                     type="text" 
                     :placeholder="placeholderString" 
-                    :value="inputValue"
-                    @input="inputData"
+                    v-model="inputValue"
                     @keypress.enter="addNote"
                 />
             </div>
@@ -25,7 +27,7 @@
             <hr />
             <ul v-if="noteList.length !== 0">
                 <li v-for="(note, i) in noteList">
-                    {{ toUpperCase(note) }}
+                    <span>{{ toUpperCase(note) }}</span>
                     <button @click="deleteNote(i)">
                         Delete
                     </button>
@@ -33,7 +35,7 @@
                 <hr />
                 <li>
                     <strong>
-                        Note count: {{ noteList.length }} | Double: {{ doubleCount() }}
+                        Note count: {{ noteList.length }} | Double: {{ doubleCount }}
                     </strong>
                 </li>
             </ul>
